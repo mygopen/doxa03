@@ -32,3 +32,13 @@ npm run build
 ```
 
 建置完成後，`dist/` 目錄就是可部署到 Cloudflare Pages、Netlify、Vercel、GitHub Pages，或任何靜態網站主機的獨立網頁。
+
+## Blogger 嵌入建議
+
+若要保留 `https://class.mygopen.com/` 原本的 sticky bar，建議在 Blogger 新增一個頁面，內容貼上 `blogger/doxa03-page.html`。這個頁面只放 iframe，真正的 React app 放在 R2：
+
+```text
+https://pub-db2385bfceac49e69829e162fbed9b57.r2.dev/doxa03/index.html
+```
+
+Blogger 原生頁面網址通常會是 `/p/doxa03.html`。若要讓公開網址停在 `https://class.mygopen.com/doxa03`，可在 Cloudflare 加 Worker route，範本在 `cloudflare/doxa03-worker.js`。
