@@ -121,7 +121,7 @@ export default function SiftDragGame() {
             <MousePointer2 className="h-4 w-4" strokeWidth={3} /> 拖曳文字方塊名詞
           </span>
           <h4 className="font-sketch-heading mt-3 text-3xl leading-tight text-[var(--pencil)]">
-            SIFT 三題快配對
+            SIFT 觀念配對拖拉放
           </h4>
           <p className="mt-1 text-lg leading-relaxed text-[var(--pencil)]/70">
             把名詞紙條拖到對應情境；手機可以先點名詞，再點答案格。
