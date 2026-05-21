@@ -40,8 +40,8 @@ export default function Header() {
           <div className="font-sketch-heading mb-2 flex items-center gap-2 text-xl text-[var(--marker-red)]">
             <Award className="h-5 w-5" strokeWidth={3} /> 課堂引導與公民指南
           </div>
-          本平台特別針對
-          <strong>《Episode 3：宗教/少數身份篇》</strong>動畫短片，建立點對點 timeline 中文字幕。請一邊看，一邊把可疑訊息停下來查。
+          <strong>《Episode 3：宗教/少數身份篇》</strong>
+          動畫短片，旨在引導觀賞者反思媒體的「標籤化抹黑」、「不實資訊操作」，培養理性查證、拒絕盲從之核心公民素養。
         </div>
       </div>
     </header>
