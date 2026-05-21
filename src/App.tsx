@@ -167,7 +167,7 @@ export default function App() {
       {/* Compact footer area */}
       <footer className="shrink-0 px-4 py-8 text-center text-lg text-[var(--pencil)]/65">
         <p className="mx-auto max-w-2xl border-t-2 border-dashed border-[var(--pencil)] pt-5 leading-relaxed">
-          微光識讀 (Sentry of Truth) © 2026. Designed with meticulous details to empower media literacy education across generational cohorts.
+          DoxA 鐘響 © 2026. Designed with MyGoPen x 復興商工｜廣三義｜媒體動畫組｜第五組
         </p>
       </footer>
     </div>

@@ -1,4 +1,4 @@
-import { Award, Eye, ShieldAlert, Sparkles } from "lucide-react";
+import { Award, ShieldAlert, Sparkles } from "lucide-react";
 
 export default function Header() {
   return (
@@ -19,15 +19,18 @@ export default function Header() {
               <ShieldAlert className="h-4 w-4" strokeWidth={3} /> 媒體素養專案
             </span>
           </div>
-          <h1 className="font-sketch-heading flex flex-wrap items-center gap-3 text-5xl leading-none text-[var(--pencil)] md:text-6xl">
-            <span className="inline-flex h-14 w-14 rotate-[-5deg] items-center justify-center border-[3px] border-[var(--pencil)] bg-white shadow-[4px_4px_0_0_var(--pencil)]" style={{ borderRadius: "52% 44% 55% 43% / 42% 58% 40% 55%" }}>
-              <Eye className="h-8 w-8 text-[var(--ballpoint)]" strokeWidth={3} />
-            </span>
-            微光識讀
-            <span className="text-3xl text-[var(--ballpoint)] md:text-4xl">輿論真相探查器</span>
-          </h1>
+          <div className="flex flex-col gap-3">
+            <img
+              src="https://ik.imagekit.io/mygopen/doxa-logo.png"
+              alt="DoxA 鐘響"
+              className="h-auto w-full max-w-[360px] -rotate-1 object-contain md:max-w-[430px]"
+            />
+            <h1 className="font-sketch-heading text-3xl leading-tight text-[var(--ballpoint)] md:text-4xl">
+              貼標籤｜因為大家都這樣說啊
+            </h1>
+          </div>
           <p className="max-w-xl text-xl leading-snug text-[var(--pencil)]/75">
-            Sentry of Truth — 一張可以播放、跳轉、做筆記的媒體識讀草稿桌。
+            面對未知與大眾既定認知資訊，你必須學會拆解傳言
           </p>
         </div>
 
