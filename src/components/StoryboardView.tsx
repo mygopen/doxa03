@@ -123,10 +123,6 @@ export default function StoryboardView({
     await playerRef.current?.requestFullscreen();
   };
 
-  const currentSceneLabel = currentSubtitle
-    ? `${currentSubtitle.sceneTitle} · ${currentSubtitle.speaker}`
-    : "等待播放";
-
   const subtitleTextSize = currentSubtitle && currentSubtitle.text.length > 90
     ? "text-base md:text-xl"
     : currentSubtitle && currentSubtitle.text.length > 58
@@ -203,9 +199,6 @@ export default function StoryboardView({
         {currentSubtitle && !videoError && (
           <div className="sketch-subtitle pointer-events-none absolute bottom-0 left-0 right-0 px-4 pb-4 pt-16 md:px-8 md:pb-7">
             <div className="mx-auto max-w-4xl text-center">
-              <p className="mb-2 text-sm font-bold uppercase tracking-widest text-white/65">
-                {currentSceneLabel}
-              </p>
               <p className={`${subtitleTextSize} font-bold leading-relaxed text-white drop-shadow`}>
                 {currentSubtitle.text}
               </p>
