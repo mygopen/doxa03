@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "./components/Header";
+import SiftDragGame from "./components/SiftDragGame";
 import StoryboardView from "./components/StoryboardView";
 import TimelineTracks from "./components/TimelineTracks";
 import { initialSubtitles } from "./data";
@@ -160,6 +161,7 @@ export default function App() {
             </div>
 
           </div>
+          <SiftDragGame />
         </section>
 
       </main>
