@@ -2,8 +2,8 @@ import { Award, ShieldAlert, Sparkles } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="px-4 py-6 md:px-8 md:py-8">
-      <div className="relative mx-auto flex max-w-5xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+    <header className="doxa03-hero px-4 py-8 md:px-8 md:py-10">
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <div className="absolute -left-2 top-1 hidden h-10 w-10 rotate-12 border-[3px] border-dashed border-[var(--pencil)] md:block" style={{ borderRadius: "50% 42% 53% 45% / 45% 55% 40% 50%" }} />
         <div className="absolute -right-3 bottom-3 hidden text-[var(--marker-red)] md:block">
           <Sparkles className="h-8 w-8 sketch-bob" strokeWidth={3} />
