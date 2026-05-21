@@ -128,10 +128,10 @@ export default function App() {
             <div className="sketch-postit rotate-1 space-y-2 p-4 transition-transform duration-100 hover:rotate-0">
               <span className="font-sketch-heading flex items-center gap-2 text-2xl text-[var(--pencil)]">
                 <span className="inline-block h-3 w-3 bg-[var(--ballpoint)]" style={{ borderRadius: "45% 55% 46% 54% / 55% 43% 57% 45%" }} />
-                議程設定與黑手操作 (Agenda Setting)
+                媒體素養（Media Literacy）
               </span>
               <p>
-                批判性反思提問：「如果媒體上到處在討論某個少數信仰或偏遠族群極其怪誕的行為，你會直接相信、還是會向多重、具有公信力事實來源來查證呢？」
+                並非單純指涉操作科技的能力，而是一套批判思考的策略，主動拆解訊息背後的意圖，辨識「何為事實、何為觀點」。當我們接收各種資訊、新聞、訊息時，最重要的是要具備辨別真偽的敏銳度，這不僅是事實查核（Fact-checking），更包含對訊息來源的警覺。
               </p>
             </div>
 
