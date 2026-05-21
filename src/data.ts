@@ -5,7 +5,7 @@ export const initialSubtitles: SubtitleItem[] = [
     id: "sub-1",
     startTime: 0,
     endTime: 3,
-    text: "第三集：宗教與身份篇。在這個封閉的城市中，異類傳聞正在悄然擴散...",
+    text: "第三集：宗教篇。在這個封閉的城市中，異類傳聞正在悄然擴散...",
     speaker: "旁白 (Narrator)",
     sceneTitle: "背景設定：少數族群的生存寓言",
     sceneDesc: "【標籤化效應 (Labeling)】：封閉城市象徵資訊單一、偏見容易堆積的環境。當異類傳聞開始擴散，社會會先看見標籤，而不是個體真實樣貌。",
