@@ -45,7 +45,7 @@ input {
 
 .doxa03-hero {
   background:
-    linear-gradient(90deg, rgba(253, 251, 247, 0.96) 0%, rgba(253, 251, 247, 0.86) 45%, rgba(253, 251, 247, 0.94) 100%),
+    linear-gradient(90deg, rgba(253, 251, 247, 0.77) 0%, rgba(253, 251, 247, 0.69) 45%, rgba(253, 251, 247, 0.75) 100%),
     radial-gradient(var(--old-paper) 1px, transparent 1px),
     url("https://ik.imagekit.io/mygopen/597391642_122105616387155029_466759218922943807_n.jpg");
   background-blend-mode: normal, multiply, luminosity;
@@ -58,7 +58,7 @@ input {
 }
 
 .doxa03-hero::before {
-  background: rgba(253, 251, 247, 0.58);
+  background: rgba(253, 251, 247, 0.46);
   content: "";
   inset: 0;
   pointer-events: none;
@@ -67,7 +67,7 @@ input {
 
 .doxa03-hero::after {
   background:
-    linear-gradient(180deg, rgba(253, 251, 247, 0.2), rgba(253, 251, 247, 0.9)),
+    linear-gradient(180deg, rgba(253, 251, 247, 0.16), rgba(253, 251, 247, 0.72)),
     repeating-linear-gradient(1deg, rgba(45, 45, 45, 0.03) 0 1px, transparent 1px 6px);
   content: "";
   inset: 0;
