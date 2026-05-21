@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+.doxa03-player-shell:fullscreen {
+  background: #000;
+  border: 0;
+  border-radius: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.doxa03-player-shell:fullscreen video {
+  height: 100vh;
+  width: 100vw;
+}

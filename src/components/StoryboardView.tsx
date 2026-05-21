@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import {
   AlertTriangle,
   Clock,
+  Maximize2,
+  Minimize2,
   Pause,
   Play,
   RotateCcw,
@@ -43,8 +45,10 @@ export default function StoryboardView({
   onNextSubtitle
 }: StoryboardViewProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const playerRef = useRef<HTMLDivElement | null>(null);
   const [duration, setDuration] = useState<number>(98);
   const [videoError, setVideoError] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -76,6 +80,18 @@ export default function StoryboardView({
     }
   }, [isPlaying, setIsPlaying, videoError]);
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === playerRef.current);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
   // Format seconds to text e.g., 01:24
   const formatTime = (time: number) => {
     const mins = Math.floor(time / 60);
@@ -100,6 +116,15 @@ export default function StoryboardView({
     setIsPlaying((playing) => !playing);
   };
 
+  const handleToggleFullscreen = async () => {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      return;
+    }
+
+    await playerRef.current?.requestFullscreen();
+  };
+
   const currentSceneLabel = currentSubtitle
     ? `${currentSubtitle.sceneTitle} · ${currentSubtitle.speaker}`
     : "等待播放";
@@ -111,7 +136,10 @@ export default function StoryboardView({
   return (
     <div className="space-y-4">
       {/* 1. Main player panel screen area */}
-      <div className="relative aspect-video w-full rounded-2xl bg-neutral-950 border border-[#E6E4DD] shadow-md overflow-hidden">
+      <div
+        ref={playerRef}
+        className="doxa03-player-shell relative aspect-video w-full rounded-2xl bg-neutral-950 border border-[#E6E4DD] shadow-md overflow-hidden"
+      >
         <video
           ref={videoRef}
           className="h-full w-full bg-black object-contain"
@@ -137,9 +165,24 @@ export default function StoryboardView({
           <span className="rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white/90 backdrop-blur">
             {publicUrlHint}
           </span>
-          <span className="max-w-[64%] truncate rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-mono text-white/80 backdrop-blur">
-            {R2_OBJECT_PATH}
-          </span>
+          <div className="flex min-w-0 items-center gap-2">
+            <span className="hidden max-w-[42vw] truncate rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-mono text-white/80 backdrop-blur sm:block">
+              {R2_OBJECT_PATH}
+            </span>
+            <button
+              type="button"
+              onClick={handleToggleFullscreen}
+              className="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-md bg-black/70 text-white/90 backdrop-blur transition hover:bg-white hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-white/70"
+              title={isFullscreen ? "離開全螢幕" : "全螢幕播放"}
+              aria-label={isFullscreen ? "離開全螢幕" : "全螢幕播放"}
+            >
+              {isFullscreen ? (
+                <Minimize2 className="h-4 w-4" />
+              ) : (
+                <Maximize2 className="h-4 w-4" />
+              )}
+            </button>
+          </div>
         </div>
 
         {videoError && (
