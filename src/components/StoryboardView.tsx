@@ -132,7 +132,7 @@ export default function StoryboardView({
       {/* 1. Main player panel screen area */}
       <div
         ref={playerRef}
-        className="doxa03-player-shell relative aspect-video w-full rounded-2xl bg-neutral-950 border border-[#E6E4DD] shadow-md overflow-hidden"
+        className="doxa03-player-shell sketch-player-shell relative aspect-video w-full overflow-hidden"
       >
         <video
           ref={videoRef}
@@ -159,31 +159,32 @@ export default function StoryboardView({
           <button
             type="button"
             onClick={handleToggleFullscreen}
-            className="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-md bg-black/70 text-white/90 backdrop-blur transition hover:bg-white hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-white/70"
+            className="pointer-events-auto inline-flex h-11 w-11 rotate-1 items-center justify-center border-[3px] border-[var(--pencil)] bg-white text-[var(--pencil)] shadow-[4px_4px_0_0_var(--pencil)] transition-transform duration-100 hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-[var(--post-it)] hover:shadow-[2px_2px_0_0_var(--pencil)] focus:outline-none focus:ring-2 focus:ring-[var(--ballpoint)]/30"
+            style={{ borderRadius: "18px 10px 20px 12px / 12px 20px 11px 18px" }}
             title={isFullscreen ? "離開全螢幕" : "全螢幕播放"}
             aria-label={isFullscreen ? "離開全螢幕" : "全螢幕播放"}
           >
             {isFullscreen ? (
-              <Minimize2 className="h-4 w-4" />
+              <Minimize2 className="h-5 w-5" strokeWidth={3} />
             ) : (
-              <Maximize2 className="h-4 w-4" />
+              <Maximize2 className="h-5 w-5" strokeWidth={3} />
             )}
           </button>
         </div>
 
         {videoError && (
           <div className="absolute inset-0 flex items-center justify-center bg-neutral-950/90 p-6 text-center">
-            <div className="max-w-lg space-y-3 rounded-xl border border-amber-300/40 bg-neutral-900 p-5 text-white shadow-xl">
-              <AlertTriangle className="mx-auto h-8 w-8 text-amber-300" />
+            <div className="sketch-postit max-w-lg space-y-3 p-5 text-[var(--pencil)]">
+              <AlertTriangle className="mx-auto h-8 w-8 text-[var(--marker-red)]" strokeWidth={3} />
               <div className="space-y-1">
-                <h3 className="text-base font-bold">影片尚無法公開載入</h3>
-                <p className="text-sm leading-relaxed text-neutral-300">
+                <h3 className="font-sketch-heading text-2xl">影片尚無法公開載入</h3>
+                <p className="text-lg leading-relaxed">
                   目前物件是 {R2_OBJECT_PATH}。Cloudflare Dashboard 連結只供管理使用，請使用 R2 的 Public Development URL、Custom Domain URL，或可讀取的 MP4 URL。
                 </p>
               </div>
               <a
                 href={R2_DASHBOARD_OBJECT_URL}
-                className="pointer-events-auto inline-flex rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-neutral-900 transition hover:bg-amber-100"
+                className="sketch-button pointer-events-auto text-lg"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -194,12 +195,12 @@ export default function StoryboardView({
         )}
 
         {currentSubtitle && !videoError && (
-          <div className="pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-4 pb-4 pt-16 md:px-8 md:pb-7">
+          <div className="sketch-subtitle pointer-events-none absolute bottom-0 left-0 right-0 px-4 pb-4 pt-16 md:px-8 md:pb-7">
             <div className="mx-auto max-w-4xl text-center">
-              <p className="mb-2 text-[10px] font-mono font-bold uppercase tracking-widest text-white/55">
+              <p className="mb-2 text-sm font-bold uppercase tracking-widest text-white/65">
                 {currentSceneLabel}
               </p>
-              <p className="text-base font-bold leading-relaxed text-white drop-shadow md:text-xl">
+              <p className="text-xl font-bold leading-relaxed text-white drop-shadow md:text-3xl">
                 {currentSubtitle.text}
               </p>
             </div>
@@ -208,10 +209,11 @@ export default function StoryboardView({
       </div>
 
       {/* 2. Media control deck */}
-      <div className="bg-white border border-[#E6E4DD] rounded-xl p-4 shadow-xs space-y-4">
+      <div className="sketch-card relative space-y-5 p-5">
+        <span className="sketch-tape" />
         {/* Timeline Slider */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-xs font-semibold text-gray-500 font-mono">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between text-lg font-bold text-[var(--pencil)]/75">
             <span>當前秒數: {formatTime(currentTime)}</span>
             <span>總長: {formatTime(duration)}</span>
           </div>
@@ -225,15 +227,15 @@ export default function StoryboardView({
               onChange={(e) => {
                 setCurrentTime(Number(e.target.value));
               }}
-              className="w-full h-2 rounded-lg bg-gray-100 appearance-none cursor-pointer accent-[#8C2D19] focus:outline-none focus:ring-1 focus:ring-[#8C2D19]"
+              className="sketch-range h-6 w-full cursor-pointer appearance-none bg-transparent focus:outline-none"
             />
             {/* Markers on timeline slider representing major scenes */}
             <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between pointer-events-none px-1">
               {TIMELINE_MARKERS.map((m) => (
                 <div 
                   key={m} 
-                  className={`w-1.5 h-1.5 rounded-full ${currentTime >= m ? 'bg-[#8C2D19]' : 'bg-gray-300'}`} 
-                  style={{ left: `${(m / duration) * 100}%` }}
+                  className={`h-3 w-3 border-2 border-[var(--pencil)] ${currentTime >= m ? 'bg-[var(--marker-red)]' : 'bg-white'}`} 
+                  style={{ borderRadius: "50% 42% 55% 45% / 48% 54% 44% 52%" }}
                   title={`節點: ${formatTime(m)}`}
                 />
               ))}
@@ -248,29 +250,29 @@ export default function StoryboardView({
             <button
               onClick={onPrevSubtitle}
               disabled={!currentSubtitle}
-              className="p-2 text-gray-500 hover:text-[#8C2D19] hover:bg-[#FAF9F5] rounded-lg transition-colors duration-150 disabled:opacity-50"
+              className="sketch-icon-button"
               title="上一句字幕"
             >
-              <SkipBack className="w-5 h-5" />
+              <SkipBack className="h-5 w-5" strokeWidth={3} />
             </button>
 
             {/* Play/Pause Main Btn */}
             <button
               onClick={handleTogglePlayback}
               disabled={videoError}
-              className={`flex items-center gap-1.5 px-5 py-2.5 rounded-xl font-semibold text-sm tracking-wide shadow-xs transition-all duration-200 ${
+              className={`sketch-button text-xl ${
                 isPlaying 
-                  ? "bg-[#1A1A1A] text-white hover:bg-neutral-800" 
-                  : "bg-[#8C2D19] text-white hover:bg-[#732414] hover:-translate-y-0.5"
-              } disabled:cursor-not-allowed disabled:opacity-50`}
+                  ? "bg-[var(--pencil)] text-white" 
+                  : "bg-[var(--marker-red)] text-white"
+              }`}
             >
               {isPlaying ? (
                 <>
-                  <Pause className="w-4 h-4 fill-white" /> 暫停
+                  <Pause className="h-5 w-5 fill-white" strokeWidth={3} /> 暫停
                 </>
               ) : (
                 <>
-                  <Play className="w-4 h-4 fill-white" /> 播放
+                  <Play className="h-5 w-5 fill-white" strokeWidth={3} /> 播放
                 </>
               )}
             </button>
@@ -279,10 +281,10 @@ export default function StoryboardView({
             <button
               onClick={onNextSubtitle}
               disabled={!currentSubtitle}
-              className="p-2 text-gray-500 hover:text-[#8C2D19] hover:bg-[#FAF9F5] rounded-lg transition-colors duration-150 disabled:opacity-50"
+              className="sketch-icon-button"
               title="下一句字幕"
             >
-              <SkipForward className="w-5 h-5" />
+              <SkipForward className="h-5 w-5" strokeWidth={3} />
             </button>
 
             {/* Reset Btn */}
@@ -292,27 +294,28 @@ export default function StoryboardView({
                 setCurrentTime(0);
                 if (videoRef.current) videoRef.current.currentTime = 0;
               }}
-              className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-150"
+              className="sketch-icon-button"
               title="重置播放進度至 00:00"
             >
-              <RotateCcw className="w-5 h-5" />
+              <RotateCcw className="h-5 w-5" strokeWidth={3} />
             </button>
           </div>
 
           {/* Speed Selector */}
-          <div className="flex items-center gap-1 text-xs">
-            <span className="text-gray-400 font-mono font-semibold mr-1 flex items-center gap-0.5">
-              <Clock className="w-3.5 h-3.5" /> 播放倍速:
+          <div className="flex items-center gap-2 text-lg">
+            <span className="mr-1 flex items-center gap-1 font-bold text-[var(--pencil)]/70">
+              <Clock className="h-4 w-4" strokeWidth={3} /> 播放倍速:
             </span>
             {[1, 1.5, 2].map((s) => (
               <button
                 key={s}
                 onClick={() => setPlaySpeed(s)}
-                className={`px-3 py-1.5 font-semibold font-mono rounded-md border tracking-tight transition-all ${
+                className={`border-2 border-[var(--pencil)] px-3 py-1 font-bold shadow-[2px_2px_0_0_var(--pencil)] transition-transform duration-100 hover:rotate-1 ${
                   playSpeed === s 
-                    ? "bg-[#FAF9F5] border-[#8C2D19] text-[#8C2D19]" 
-                    : "bg-white border-[#E6E4DD] text-gray-500 hover:bg-gray-50"
+                    ? "bg-[var(--post-it)] text-[var(--marker-red)]" 
+                    : "bg-white text-[var(--pencil)]"
                 }`}
+                style={{ borderRadius: "18px 10px 16px 12px / 12px 16px 10px 18px" }}
               >
                 {s}x
               </button>

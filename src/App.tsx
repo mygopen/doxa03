@@ -71,12 +71,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] text-[#1A1A1A] font-sans antialiased flex flex-col selection:bg-red-100 selection:text-[#8C2D19]">
+    <div className="sketch-page flex min-h-screen flex-col text-[var(--pencil)] selection:bg-[var(--marker-red)] selection:text-white">
       {/* Universal introduction banner */}
       <Header />
 
       {/* Main Container */}
-      <main className="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 space-y-6">
+      <main className="mx-auto w-full max-w-5xl flex-grow space-y-8 p-4 md:p-6 lg:p-8">
         
         {/* Full-width player and subtitle editor */}
         <div className="space-y-6">
@@ -102,18 +102,21 @@ export default function App() {
         </div>
 
         {/* Dynamic educational glossary explaining the core principles */}
-        <section className="bg-white border border-[#E6E4DD] rounded-xl p-6 space-y-4">
-          <div className="flex items-center gap-2 border-b border-gray-100 pb-3">
-            <ShieldAlert className="w-5 h-5 text-[#8C2D19]" />
-            <h3 className="font-bold text-gray-900 text-base tracking-tight">
+        <section className="sketch-card relative space-y-5 p-6">
+          <span className="sketch-tape" />
+          <div className="flex items-center gap-3 border-b-2 border-dashed border-[var(--pencil)] pb-4">
+            <span className="inline-flex h-11 w-11 -rotate-6 items-center justify-center border-[3px] border-[var(--pencil)] bg-[var(--post-it)] shadow-[3px_3px_0_0_var(--pencil)]" style={{ borderRadius: "54% 44% 49% 47% / 45% 57% 42% 53%" }}>
+              <ShieldAlert className="h-6 w-6 text-[var(--marker-red)]" strokeWidth={3} />
+            </span>
+            <h3 className="font-sketch-heading text-3xl leading-tight text-[var(--pencil)] md:text-4xl">
               媒體識讀素養學堂 ‧ 核心名詞與原則對照 (Core Terms Reference)
             </h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-gray-600 leading-relaxed">
+          <div className="grid grid-cols-1 gap-6 text-lg leading-relaxed md:grid-cols-3">
             
-            <div className="space-y-1.5 p-3 rounded-lg hover:bg-gray-50/50 transition">
-              <span className="font-mono font-bold text-gray-900 flex items-center gap-1">
-                <span className="inline-block w-2 bg-red-650 h-2 rounded-full" />
+            <div className="sketch-card-soft -rotate-1 space-y-2 bg-white p-4 transition-transform duration-100 hover:rotate-0">
+              <span className="font-sketch-heading flex items-center gap-2 text-2xl text-[var(--pencil)]">
+                <span className="inline-block h-3 w-3 bg-[var(--marker-red)]" style={{ borderRadius: "50% 42% 55% 45% / 48% 54% 44% 52%" }} />
                 標籤化與刻板偏見 (Labeling)
               </span>
               <p>
@@ -121,9 +124,9 @@ export default function App() {
               </p>
             </div>
 
-            <div className="space-y-1.5 p-3 rounded-lg hover:bg-gray-50/50 transition">
-              <span className="font-mono font-bold text-gray-900 flex items-center gap-1">
-                <span className="inline-block w-2 bg-amber-500 h-2 rounded-full" />
+            <div className="sketch-postit rotate-1 space-y-2 p-4 transition-transform duration-100 hover:rotate-0">
+              <span className="font-sketch-heading flex items-center gap-2 text-2xl text-[var(--pencil)]">
+                <span className="inline-block h-3 w-3 bg-[var(--ballpoint)]" style={{ borderRadius: "45% 55% 46% 54% / 55% 43% 57% 45%" }} />
                 議程設定與黑手操作 (Agenda Setting)
               </span>
               <p>
@@ -131,26 +134,26 @@ export default function App() {
               </p>
             </div>
 
-            <div className="space-y-2 p-3.5 rounded-lg hover:bg-emerald-50/20 transition bg-emerald-50/40 border border-emerald-200/60">
-              <span className="font-mono font-bold text-gray-900 flex items-center gap-1 text-xs">
-                <span className="inline-block w-2 bg-emerald-600 h-2 rounded-full animate-pulse" />
+            <div className="sketch-card-soft -rotate-[0.5deg] space-y-3 bg-white p-4 transition-transform duration-100 hover:rotate-0">
+              <span className="font-sketch-heading flex items-center gap-2 text-2xl text-[var(--pencil)]">
+                <span className="inline-block h-3 w-3 animate-pulse bg-[var(--marker-red)]" style={{ borderRadius: "52% 42% 56% 44% / 45% 58% 43% 52%" }} />
                 掌握 SIFT 的四個關鍵步驟
               </span>
-              <div className="space-y-2.5 mt-2 text-[11px] text-gray-700 leading-relaxed font-sans">
+              <div className="mt-2 space-y-3 text-lg leading-relaxed">
                 <div>
-                  <span className="font-bold text-emerald-800">1. Stop（冷靜思考）：</span>
+                  <span className="font-sketch-heading text-[var(--ballpoint)]">1. Stop（冷靜思考）：</span>
                   在看到令人驚訝的影片或照片時，先停下分享的衝動，避免情緒被煽動。
                 </div>
                 <div>
-                  <span className="font-bold text-emerald-800">2. Investigate the source（調查來源）：</span>
+                  <span className="font-sketch-heading text-[var(--ballpoint)]">2. Investigate the source（調查來源）：</span>
                   查詢有關發布者或該圖片的背景資訊，判斷其是否具備公信力。
                 </div>
                 <div>
-                  <span className="font-bold text-emerald-805">3. Find better coverage（尋找佐證）：</span>
+                  <span className="font-sketch-heading text-[var(--ballpoint)]">3. Find better coverage（尋找佐證）：</span>
                   確認是否有其他權威媒體或事實查核機構對同一事件進行報導。
                 </div>
                 <div>
-                  <span className="font-bold text-emerald-810">4. Trace claims, quotes, and media to their original context（追溯原始脈絡）：</span>
+                  <span className="font-sketch-heading text-[var(--ballpoint)]">4. Trace claims, quotes, and media to their original context：</span>
                   透過回溯原始發布環境，確認內容是否被斷章取義或誤導使用。
                 </div>
               </div>
@@ -162,8 +165,8 @@ export default function App() {
       </main>
 
       {/* Compact footer area */}
-      <footer className="border-t border-[#E6E4DD] bg-white py-6 px-4 shrink-0 text-center text-xs text-gray-500 font-mono">
-        <p className="max-w-2xl mx-auto leading-relaxed">
+      <footer className="shrink-0 px-4 py-8 text-center text-lg text-[var(--pencil)]/65">
+        <p className="mx-auto max-w-2xl border-t-2 border-dashed border-[var(--pencil)] pt-5 leading-relaxed">
           微光識讀 (Sentry of Truth) © 2026. Designed with meticulous details to empower media literacy education across generational cohorts.
         </p>
       </footer>

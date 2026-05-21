@@ -1,5 +1,223 @@
 @import "tailwindcss";
 
+:root {
+  --paper: #fdfbf7;
+  --pencil: #2d2d2d;
+  --old-paper: #e5e0d8;
+  --marker-red: #ff4d4d;
+  --ballpoint: #2d5da1;
+  --post-it: #fff9c4;
+  --wobbly: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --wobbly-md: 28px 18px 31px 16px / 18px 31px 16px 28px;
+  --wobbly-sm: 15px 22px 13px 24px / 22px 15px 24px 13px;
+  --hard-shadow: 4px 4px 0 0 var(--pencil);
+  --hard-shadow-lg: 8px 8px 0 0 var(--pencil);
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--old-paper) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--pencil);
+  font-family: "Patrick Hand", "Microsoft JhengHei", "PingFang TC", cursive;
+  letter-spacing: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.font-sketch-heading {
+  font-family: "Kalam", "Patrick Hand", cursive;
+  font-weight: 700;
+}
+
+.sketch-page {
+  background-color: rgba(253, 251, 247, 0.92);
+  background-image: radial-gradient(var(--old-paper) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.sketch-card {
+  background: #fff;
+  border: 3px solid var(--pencil);
+  border-radius: var(--wobbly-md);
+  box-shadow: var(--hard-shadow);
+  color: var(--pencil);
+}
+
+.sketch-card-soft {
+  background: rgba(255, 255, 255, 0.88);
+  border: 2px dashed var(--pencil);
+  border-radius: var(--wobbly-md);
+  box-shadow: 3px 3px 0 0 rgba(45, 45, 45, 0.18);
+}
+
+.sketch-postit {
+  background: var(--post-it);
+  border: 3px solid var(--pencil);
+  border-radius: var(--wobbly-sm);
+  box-shadow: var(--hard-shadow);
+}
+
+.sketch-tape {
+  background: rgba(229, 224, 216, 0.78);
+  border: 1px dashed rgba(45, 45, 45, 0.3);
+  height: 24px;
+  left: 50%;
+  position: absolute;
+  top: -13px;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 108px;
+}
+
+.sketch-tag {
+  align-items: center;
+  background: #fff;
+  border: 2px solid var(--pencil);
+  border-radius: var(--wobbly);
+  box-shadow: 3px 3px 0 0 var(--pencil);
+  color: var(--pencil);
+  display: inline-flex;
+  gap: 0.35rem;
+  line-height: 1;
+  padding: 0.3rem 0.72rem;
+}
+
+.sketch-button {
+  align-items: center;
+  background: #fff;
+  border: 3px solid var(--pencil);
+  border-radius: var(--wobbly);
+  box-shadow: var(--hard-shadow);
+  color: var(--pencil);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.45rem;
+  min-height: 48px;
+  padding: 0.58rem 1rem;
+  transition: transform 100ms ease, box-shadow 100ms ease, background-color 100ms ease, color 100ms ease;
+}
+
+.sketch-button:hover {
+  background: var(--marker-red);
+  box-shadow: 2px 2px 0 0 var(--pencil);
+  color: #fff;
+  transform: translate(2px, 2px) rotate(-1deg);
+}
+
+.sketch-button:active {
+  box-shadow: 0 0 0 0 var(--pencil);
+  transform: translate(4px, 4px);
+}
+
+.sketch-button-secondary:hover {
+  background: var(--ballpoint);
+}
+
+.sketch-icon-button {
+  align-items: center;
+  background: #fff;
+  border: 2px solid var(--pencil);
+  border-radius: var(--wobbly-sm);
+  box-shadow: 3px 3px 0 0 var(--pencil);
+  color: var(--pencil);
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  transition: transform 100ms ease, box-shadow 100ms ease, background-color 100ms ease, color 100ms ease;
+  width: 42px;
+}
+
+.sketch-icon-button:hover {
+  background: var(--post-it);
+  box-shadow: 1px 1px 0 0 var(--pencil);
+  transform: translate(2px, 2px) rotate(1deg);
+}
+
+.sketch-icon-button:disabled,
+.sketch-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.sketch-input {
+  background: #fff;
+  border: 2px solid var(--pencil);
+  border-radius: var(--wobbly-sm);
+  color: var(--pencil);
+  outline: none;
+}
+
+.sketch-input:focus {
+  border-color: var(--ballpoint);
+  box-shadow: 0 0 0 3px rgba(45, 93, 161, 0.18);
+}
+
+.sketch-player-shell {
+  background: #050505;
+  border: 4px solid var(--pencil);
+  border-radius: var(--wobbly-md);
+  box-shadow: var(--hard-shadow-lg);
+}
+
+.sketch-subtitle {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.62), transparent);
+  font-family: "Kalam", "Patrick Hand", cursive;
+}
+
+.sketch-range {
+  accent-color: var(--marker-red);
+}
+
+.sketch-range::-webkit-slider-runnable-track {
+  background: var(--old-paper);
+  border: 2px solid var(--pencil);
+  border-radius: var(--wobbly);
+  height: 12px;
+}
+
+.sketch-range::-webkit-slider-thumb {
+  appearance: none;
+  background: var(--marker-red);
+  border: 2px solid var(--pencil);
+  border-radius: var(--wobbly-sm);
+  box-shadow: 2px 2px 0 0 var(--pencil);
+  height: 24px;
+  margin-top: -8px;
+  width: 24px;
+}
+
+.sketch-row {
+  border-bottom: 2px dashed rgba(45, 45, 45, 0.18);
+}
+
+.sketch-row-active {
+  background: var(--post-it);
+  border: 3px solid var(--pencil);
+  border-radius: var(--wobbly-sm);
+  box-shadow: 4px 4px 0 0 var(--pencil);
+  transform: rotate(-0.35deg);
+}
+
+@keyframes sketch-bob {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+}
+
+.sketch-bob {
+  animation: sketch-bob 3s ease-in-out infinite;
+}
+
 .doxa03-player-shell:fullscreen {
   background: #000;
   border: 0;
