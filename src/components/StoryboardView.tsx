@@ -17,7 +17,7 @@ import {
   VIDEO_SOURCE_URL,
 } from "../videoConfig";
 
-const TIMELINE_MARKERS = [0, 16, 24, 31, 42, 52, 65, 79, 89];
+const TIMELINE_MARKERS = [0, 16, 24, 30, 42, 52, 63, 79, 89];
 
 interface StoryboardViewProps {
   currentTime: number;
@@ -127,6 +127,12 @@ export default function StoryboardView({
     ? `${currentSubtitle.sceneTitle} · ${currentSubtitle.speaker}`
     : "等待播放";
 
+  const subtitleTextSize = currentSubtitle && currentSubtitle.text.length > 90
+    ? "text-base md:text-xl"
+    : currentSubtitle && currentSubtitle.text.length > 58
+      ? "text-lg md:text-2xl"
+      : "text-xl md:text-3xl";
+
   return (
     <div className="space-y-4">
       {/* 1. Main player panel screen area */}
@@ -200,7 +206,7 @@ export default function StoryboardView({
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-white/65">
                 {currentSceneLabel}
               </p>
-              <p className="text-xl font-bold leading-relaxed text-white drop-shadow md:text-3xl">
+              <p className={`${subtitleTextSize} font-bold leading-relaxed text-white drop-shadow`}>
                 {currentSubtitle.text}
               </p>
             </div>
