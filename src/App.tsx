@@ -109,7 +109,7 @@ export default function App() {
               <ShieldAlert className="h-6 w-6 text-[var(--marker-red)]" strokeWidth={3} />
             </span>
             <h3 className="font-sketch-heading text-3xl leading-tight text-[var(--pencil)] md:text-4xl">
-              媒體識讀素養學堂 ‧ 核心名詞與原則對照 (Core Terms Reference)
+              媒體識讀核心原則對照
             </h3>
           </div>
           <div className="grid grid-cols-1 gap-6 text-lg leading-relaxed md:grid-cols-3">
