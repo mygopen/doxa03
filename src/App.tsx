@@ -2,13 +2,12 @@ import { useState } from "react";
 import Header from "./components/Header";
 import SiftDragGame from "./components/SiftDragGame";
 import StoryboardView from "./components/StoryboardView";
-import TimelineTracks from "./components/TimelineTracks";
 import { initialSubtitles } from "./data";
 import { SubtitleItem } from "./types";
 import { ShieldAlert } from "lucide-react";
 
 export default function App() {
-  const [subtitles, setSubtitles] = useState<SubtitleItem[]>(initialSubtitles);
+  const subtitles = initialSubtitles;
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playSpeed, setPlaySpeed] = useState<number>(1);
@@ -36,23 +35,6 @@ export default function App() {
 
   const currentSubtitle = getCurrentSubtitle();
 
-  // Jump player progress directly on timeline track click
-  const handleSelectTime = (time: number) => {
-    setCurrentTime(time);
-  };
-
-  // Inline subtitling interactive sync editor
-  const handleUpdateSubtitleText = (id: string, text: string) => {
-    setSubtitles((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, text } : item))
-    );
-  };
-
-  // Reset to original well-crafted Media Literacy subsets
-  const handleResetSubtitles = () => {
-    setSubtitles(initialSubtitles);
-  };
-
   // Controller buttons: skip to previous subtitle block
   const handlePrevSubtitle = () => {
     if (!currentSubtitle) return;
@@ -79,28 +61,17 @@ export default function App() {
       {/* Main Container */}
       <main className="mx-auto w-full max-w-5xl flex-grow space-y-8 p-4 md:p-6 lg:p-8">
         
-        {/* Full-width player and subtitle editor */}
-        <div className="space-y-6">
-          <StoryboardView
-            currentTime={currentTime}
-            setCurrentTime={setCurrentTime}
-            isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
-            playSpeed={playSpeed}
-            setPlaySpeed={setPlaySpeed}
-            currentSubtitle={currentSubtitle}
-            onPrevSubtitle={handlePrevSubtitle}
-            onNextSubtitle={handleNextSubtitle}
-          />
-
-          <TimelineTracks
-            subtitles={subtitles}
-            currentTime={currentTime}
-            onSelectTime={handleSelectTime}
-            onUpdateSubtitleText={handleUpdateSubtitleText}
-            onResetSubtitles={handleResetSubtitles}
-          />
-        </div>
+        <StoryboardView
+          currentTime={currentTime}
+          setCurrentTime={setCurrentTime}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          playSpeed={playSpeed}
+          setPlaySpeed={setPlaySpeed}
+          currentSubtitle={currentSubtitle}
+          onPrevSubtitle={handlePrevSubtitle}
+          onNextSubtitle={handleNextSubtitle}
+        />
 
         {/* Dynamic educational glossary explaining the core principles */}
         <section className="sketch-card relative space-y-5 p-6">
