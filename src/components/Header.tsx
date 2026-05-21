@@ -26,11 +26,11 @@ export default function Header() {
               className="h-auto w-full max-w-[360px] -rotate-1 object-contain md:max-w-[430px]"
             />
             <h1 className="font-sketch-heading text-3xl leading-tight text-[var(--ballpoint)] md:text-4xl">
-              貼標籤｜因為大家都這樣說啊
+              是不是大家都這樣說？
             </h1>
           </div>
           <p className="max-w-xl text-xl leading-snug text-[var(--pencil)]/75">
-            面對未知與大眾既定認知資訊，你必須學會拆解傳言
+            別不知不覺成為幫兇！面對未知與大眾既定成見，你必須學會拆解傳言
           </p>
         </div>
 
