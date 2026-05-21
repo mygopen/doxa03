@@ -1,6 +1,6 @@
 {
   "name": "微光識讀 - 媒體識讀與輿論真相探查器",
-  "description": "提供 Episode 3 宗教篇無字幕影片的 timeline 點對點同步中文字幕與深度媒體識讀素養學習，並結合 AI 新聞與謠言真偽探查助手。",
+  "description": "提供 Episode 3 宗教篇影片的獨立網頁播放器、timeline 點對點同步中文字幕與深度媒體識讀素養學習。",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

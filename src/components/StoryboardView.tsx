@@ -1,11 +1,23 @@
-import { useState, useEffect, useRef } from "react";
-import { 
-  Play, Pause, RotateCcw, SkipForward, SkipBack, 
-  Clock, Volume2, ShieldCheck, HelpCircle, AlertOctagon, 
-  Newspaper, Users, Eye, Sun, ChefHat, Glasses, Compass, Coffee,
-  AlertCircle
+import { useEffect, useRef, useState } from "react";
+import {
+  AlertTriangle,
+  Clock,
+  Pause,
+  Play,
+  RotateCcw,
+  SkipBack,
+  SkipForward,
 } from "lucide-react";
 import { SubtitleItem } from "../types";
+import {
+  HAS_PUBLIC_VIDEO_URL,
+  R2_DASHBOARD_OBJECT_URL,
+  R2_OBJECT_PATH,
+  VIDEO_SOURCE_URL,
+  VIDEO_SOURCE_KIND,
+} from "../videoConfig";
+
+const TIMELINE_MARKERS = [0, 16, 24, 31, 42, 52, 65, 79, 89];
 
 interface StoryboardViewProps {
   currentTime: number;
@@ -30,28 +42,39 @@ export default function StoryboardView({
   onPrevSubtitle,
   onNextSubtitle
 }: StoryboardViewProps) {
-  
-  // Timer effect for simulating the video playback progress
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [duration, setDuration] = useState<number>(98);
+  const [videoError, setVideoError] = useState(false);
+
   useEffect(() => {
-    let interval: any = null;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setCurrentTime((prevTime) => {
-          const nextTime = prevTime + 1 * playSpeed;
-          if (nextTime >= 138) { // Maximum length of our video is 1分38秒 (98-138 seconds max, let's set max to 138)
-            setIsPlaying(false);
-            return 138;
-          }
-          return Number(nextTime.toFixed(1));
-        });
-      }, 1000);
-    } else {
-      if (interval) clearInterval(interval);
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (Math.abs(video.currentTime - currentTime) > 0.5) {
+      video.currentTime = currentTime;
     }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isPlaying, playSpeed, setCurrentTime, setIsPlaying]);
+  }, [currentTime]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.playbackRate = playSpeed;
+  }, [playSpeed]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || videoError) return;
+
+    if (isPlaying) {
+      video.play().catch(() => {
+        setIsPlaying(false);
+        setVideoError(true);
+      });
+    } else {
+      video.pause();
+    }
+  }, [isPlaying, setIsPlaying, videoError]);
 
   // Format seconds to text e.g., 01:24
   const formatTime = (time: number) => {
@@ -60,124 +83,99 @@ export default function StoryboardView({
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  // Helper to render customized storyboard icons with nice animation
-  const renderVisualCard = () => {
-    if (!currentSubtitle) {
-      return (
-        <div className="h-full flex flex-col items-center justify-center p-8 text-center text-gray-400 bg-gray-50 border border-dashed border-gray-200 rounded-lg">
-          <HelpCircle className="w-12 h-12 mb-2 stroke-1" />
-          <p className="font-mono text-sm">無正在播映的場景資料。請點擊播放或重置進度。</p>
-        </div>
-      );
-    }
-
-    const { id, sceneTitle, visualClue, speaker } = currentSubtitle;
-
-    // Distinguish background styles and big icons based on theme ID
-    let cardBg = "bg-slate-50 border-slate-200 text-slate-800";
-    let iconColor = "text-slate-600";
-    let iconElement = <ShieldCheck className="w-16 h-16" />;
-
-    if (id === "sub-1" || id === "sub-2" || id === "sub-3") {
-      cardBg = "bg-gradient-to-tr from-slate-100 to-indigo-50 border-indigo-100 text-indigo-900";
-      iconColor = "text-indigo-600";
-      iconElement = <ShieldCheck className="w-14 h-14" />;
-    } else if (id === "sub-4") {
-      cardBg = "bg-gradient-to-tr from-stone-200 to-stone-50 border-stone-300 text-stone-900";
-      iconColor = "text-red-700";
-      iconElement = <Users className="w-14 h-14" />;
-    } else if (id === "sub-5") {
-      cardBg = "bg-gradient-to-tr from-yellow-50 to-amber-100 border-amber-200 text-amber-900";
-      iconColor = "text-amber-600";
-      iconElement = <Volume2 className="w-14 h-14 animate-pulse" />;
-    } else if (id === "sub-6" || id === "sub-7") {
-      cardBg = "bg-gradient-to-tr from-amber-50 to-red-50 border-red-100 text-red-950";
-      iconColor = "text-[#8C2D19]";
-      iconElement = <Newspaper className="w-14 h-14" />;
-    } else if (id === "sub-8" || id === "sub-9" || id === "sub-10" || id === "sub-11" || id === "sub-12") {
-      cardBg = "bg-gradient-to-tr from-rose-50 to-orange-50 border-red-200 text-red-950";
-      iconColor = "text-red-600";
-      iconElement = <AlertOctagon className="w-14 h-14" />;
-    } else if (id === "sub-13") {
-      cardBg = "bg-gradient-to-tr from-teal-50 to-emerald-50 border-teal-200 text-teal-950";
-      iconColor = "text-teal-600";
-      iconElement = <ChefHat className="w-14 h-14" />;
-    } else if (id === "sub-14") {
-      cardBg = "bg-gradient-to-tr from-emerald-50 to-lime-50 border-emerald-200 text-emerald-950";
-      iconColor = "text-emerald-700";
-      iconElement = <ChefHat className="w-14 h-14" />;
-    } else if (id === "sub-15") {
-      cardBg = "bg-gradient-to-tr from-amber-500/10 to-orange-50 border-amber-300 text-amber-950";
-      iconColor = "text-amber-700";
-      iconElement = <Sun className="w-14 h-14" />;
-    } else if (id === "sub-16" || id === "sub-17") {
-      cardBg = "bg-gradient-to-tr from-cyan-50 to-indigo-50 border-indigo-200 text-indigo-950";
-      iconColor = "text-indigo-600";
-      iconElement = <Compass className="w-14 h-14" />;
-    } else if (id === "sub-18") {
-      cardBg = "bg-gradient-to-tr from-violet-50 to-fuchsia-50 border-violet-200 text-violet-950";
-      iconColor = "text-violet-600";
-      iconElement = <Glasses className="w-14 h-14" />;
-    } else if (id === "sub-19") {
-      cardBg = "bg-gradient-to-tr from-red-50 to-stone-250 border-stone-400 text-stone-900";
-      iconColor = "text-red-700";
-      iconElement = <AlertCircle className="w-14 h-14" />;
-    } else if (id === "sub-20") {
-      cardBg = "bg-gradient-to-tr from-stone-900 to-stone-800 border-stone-700 text-stone-100";
-      iconColor = "text-amber-400";
-      iconElement = <Coffee className="w-14 h-14" />;
-    }
-
-    return (
-      <div className={`h-full border rounded-xl overflow-hidden shadow-xs flex flex-col justify-between transition-all duration-300 ${cardBg}`}>
-        {/* Storyboard Header Tag */}
-        <div className="px-4 py-3 border-b border-inherit flex items-center justify-between text-xs font-semibold uppercase tracking-wider font-mono opacity-80">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-            場景分鏡模擬
-          </div>
-          <span>SLOT ID: {id}</span>
-        </div>
-
-        {/* Middle illustration box */}
-        <div className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 flex-1 justify-center">
-          <div className={`p-4 rounded-xl bg-white/80 shadow-xs flex-shrink-0 border border-inherit ${iconColor}`}>
-            {iconElement}
-          </div>
-          <div className="text-center md:text-left space-y-2">
-            <h3 className="font-bold text-lg md:text-xl tracking-tight leading-snug">
-              {sceneTitle}
-            </h3>
-            <p className="text-xs text-opacity-80 leading-relaxed max-w-lg italic">
-              <strong>畫面線索描繪：</strong>{visualClue}
-            </p>
-            <div className="inline-flex items-center gap-1 rounded bg-black/5 px-2 py-0.5 text-xs font-medium font-mono">
-              發話主角: <span className="font-semibold">{speaker}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Real-time Subtitle Screen Overlay - Dark Cinema Style */}
-        <div className="mx-4 mb-4 mt-auto rounded-xl bg-neutral-900/95 border border-neutral-800 p-4 md:p-6 text-center shadow-lg relative min-h-[100px] flex items-center justify-center">
-          {/* Subtle decoration to look like a real player */}
-          <span className="absolute top-2 left-3 text-[9px] font-mono text-neutral-500 uppercase tracking-widest">
-            LIVE SYNC SUBTITLE
-          </span>
-          <p className="text-white text-base md:text-lg font-bold font-sans leading-relaxed tracking-wide">
-            {currentSubtitle.text}
-          </p>
-        </div>
-      </div>
-    );
+  const handleLoadedMetadata = () => {
+    const video = videoRef.current;
+    if (!video || Number.isNaN(video.duration)) return;
+    setDuration(video.duration);
   };
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    setCurrentTime(Number(video.currentTime.toFixed(1)));
+  };
+
+  const handleTogglePlayback = () => {
+    if (!VIDEO_SOURCE_URL || videoError) return;
+    setIsPlaying((playing) => !playing);
+  };
+
+  const currentSceneLabel = currentSubtitle
+    ? `${currentSubtitle.sceneTitle} · ${currentSubtitle.speaker}`
+    : "等待播放";
+
+  const publicUrlHint = HAS_PUBLIC_VIDEO_URL
+    ? VIDEO_SOURCE_KIND
+    : "R2 PUBLIC URL NEEDED";
 
   return (
     <div className="space-y-4">
       {/* 1. Main player panel screen area */}
-      <div className="relative aspect-video w-full rounded-2xl bg-neutral-950 p-1 md:p-2 border border-[#E6E4DD] shadow-md overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-neutral-950 to-neutral-950">
-        <div className="h-full w-full bg-transparent rounded-xl overflow-hidden relative">
-          {renderVisualCard()}
+      <div className="relative aspect-video w-full rounded-2xl bg-neutral-950 border border-[#E6E4DD] shadow-md overflow-hidden">
+        <video
+          ref={videoRef}
+          className="h-full w-full bg-black object-contain"
+          src={VIDEO_SOURCE_URL}
+          preload="metadata"
+          playsInline
+          onClick={handleTogglePlayback}
+          onLoadedMetadata={handleLoadedMetadata}
+          onTimeUpdate={handleTimeUpdate}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+          onCanPlay={() => setVideoError(false)}
+          onError={() => {
+            setIsPlaying(false);
+            setVideoError(true);
+          }}
+        >
+          <source src={VIDEO_SOURCE_URL} type="video/mp4" />
+        </video>
+
+        <div className="pointer-events-none absolute left-3 right-3 top-3 flex items-start justify-between gap-3">
+          <span className="rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white/90 backdrop-blur">
+            {publicUrlHint}
+          </span>
+          <span className="max-w-[64%] truncate rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-mono text-white/80 backdrop-blur">
+            {R2_OBJECT_PATH}
+          </span>
         </div>
+
+        {videoError && (
+          <div className="absolute inset-0 flex items-center justify-center bg-neutral-950/90 p-6 text-center">
+            <div className="max-w-lg space-y-3 rounded-xl border border-amber-300/40 bg-neutral-900 p-5 text-white shadow-xl">
+              <AlertTriangle className="mx-auto h-8 w-8 text-amber-300" />
+              <div className="space-y-1">
+                <h3 className="text-base font-bold">影片尚無法公開載入</h3>
+                <p className="text-sm leading-relaxed text-neutral-300">
+                  目前物件是 {R2_OBJECT_PATH}。Cloudflare Dashboard 連結只供管理使用，請使用 R2 的 Public Development URL、Custom Domain URL，或可讀取的 MP4 URL。
+                </p>
+              </div>
+              <a
+                href={R2_DASHBOARD_OBJECT_URL}
+                className="pointer-events-auto inline-flex rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-neutral-900 transition hover:bg-amber-100"
+                target="_blank"
+                rel="noreferrer"
+              >
+                開啟 R2 物件頁
+              </a>
+            </div>
+          </div>
+        )}
+
+        {currentSubtitle && !videoError && (
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-4 pb-4 pt-16 md:px-8 md:pb-7">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="mb-2 text-[10px] font-mono font-bold uppercase tracking-widest text-white/55">
+                {currentSceneLabel}
+              </p>
+              <p className="text-base font-bold leading-relaxed text-white drop-shadow md:text-xl">
+                {currentSubtitle.text}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 2. Media control deck */}
@@ -186,13 +184,13 @@ export default function StoryboardView({
         <div className="space-y-1.5">
           <div className="flex items-center justify-between text-xs font-semibold text-gray-500 font-mono">
             <span>當前秒數: {formatTime(currentTime)}</span>
-            <span>總長: 02:18 (138秒)</span>
+            <span>總長: {formatTime(duration)}</span>
           </div>
           <div className="relative group/slider">
             <input
               type="range"
               min="0"
-              max="138"
+              max={duration}
               step="1"
               value={currentTime}
               onChange={(e) => {
@@ -202,11 +200,11 @@ export default function StoryboardView({
             />
             {/* Markers on timeline slider representing major scenes */}
             <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between pointer-events-none px-1">
-              {[0, 16, 24, 31, 42, 52, 105, 119].map((m) => (
+              {TIMELINE_MARKERS.map((m) => (
                 <div 
                   key={m} 
                   className={`w-1.5 h-1.5 rounded-full ${currentTime >= m ? 'bg-[#8C2D19]' : 'bg-gray-300'}`} 
-                  style={{ left: `${(m / 138) * 100}%` }}
+                  style={{ left: `${(m / duration) * 100}%` }}
                   title={`節點: ${formatTime(m)}`}
                 />
               ))}
@@ -229,20 +227,21 @@ export default function StoryboardView({
 
             {/* Play/Pause Main Btn */}
             <button
-              onClick={() => setIsPlaying(!isPlaying)}
+              onClick={handleTogglePlayback}
+              disabled={videoError}
               className={`flex items-center gap-1.5 px-5 py-2.5 rounded-xl font-semibold text-sm tracking-wide shadow-xs transition-all duration-200 ${
                 isPlaying 
                   ? "bg-[#1A1A1A] text-white hover:bg-neutral-800" 
                   : "bg-[#8C2D19] text-white hover:bg-[#732414] hover:-translate-y-0.5"
-              }`}
+              } disabled:cursor-not-allowed disabled:opacity-50`}
             >
               {isPlaying ? (
                 <>
-                  <Pause className="w-4 h-4 fill-white" /> 模擬暫停
+                  <Pause className="w-4 h-4 fill-white" /> 暫停
                 </>
               ) : (
                 <>
-                  <Play className="w-4 h-4 fill-white" /> 字幕播放
+                  <Play className="w-4 h-4 fill-white" /> 播放
                 </>
               )}
             </button>
@@ -262,6 +261,7 @@ export default function StoryboardView({
               onClick={() => {
                 setIsPlaying(false);
                 setCurrentTime(0);
+                if (videoRef.current) videoRef.current.currentTime = 0;
               }}
               className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-150"
               title="重置播放進度至 00:00"

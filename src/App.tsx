@@ -5,7 +5,7 @@ import TimelineTracks from "./components/TimelineTracks";
 import FactCheckPanel from "./components/FactCheckPanel";
 import { initialSubtitles } from "./data";
 import { SubtitleItem } from "./types";
-import { Eye, ShieldAlert, Sparkles, AlertCircle, FileText } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
 
 export default function App() {
   const [subtitles, setSubtitles] = useState<SubtitleItem[]>(initialSubtitles);

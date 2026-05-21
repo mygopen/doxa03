@@ -19,7 +19,7 @@ export default function Header() {
             微光識讀 <span className="text-gray-400 font-light">| 輿論真相探查器</span>
           </h1>
           <p className="text-sm text-gray-500 font-mono">
-            Sentry of Truth — Media Literacy & Interactive Subtitle Companion
+            Sentry of Truth — Standalone Video Page & Interactive Subtitle Companion
           </p>
         </div>
 
