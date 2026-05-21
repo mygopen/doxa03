@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Header from "./components/Header";
 import StoryboardView from "./components/StoryboardView";
 import TimelineTracks from "./components/TimelineTracks";
-import FactCheckPanel from "./components/FactCheckPanel";
 import { initialSubtitles } from "./data";
 import { SubtitleItem } from "./types";
 import { ShieldAlert } from "lucide-react";
@@ -79,43 +78,27 @@ export default function App() {
       {/* Main Container */}
       <main className="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 space-y-6">
         
-        {/* Split grid for Player & Track Control vs Fact Check & Gemini Analyzer */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          {/* LEFT AREA: Simulated Anime Subtitle Player & Track editor (size 7/12) */}
-          <div className="lg:col-span-7 space-y-6">
-            
-            {/* Virtual Anime subtitle player */}
-            <StoryboardView
-              currentTime={currentTime}
-              setCurrentTime={setCurrentTime}
-              isPlaying={isPlaying}
-              setIsPlaying={setIsPlaying}
-              playSpeed={playSpeed}
-              setPlaySpeed={setPlaySpeed}
-              currentSubtitle={currentSubtitle}
-              onPrevSubtitle={handlePrevSubtitle}
-              onNextSubtitle={handleNextSubtitle}
-            />
+        {/* Full-width player and subtitle editor */}
+        <div className="space-y-6">
+          <StoryboardView
+            currentTime={currentTime}
+            setCurrentTime={setCurrentTime}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            playSpeed={playSpeed}
+            setPlaySpeed={setPlaySpeed}
+            currentSubtitle={currentSubtitle}
+            onPrevSubtitle={handlePrevSubtitle}
+            onNextSubtitle={handleNextSubtitle}
+          />
 
-            {/* Subtitle list & Micro sync micro-corrector */}
-            <TimelineTracks
-              subtitles={subtitles}
-              currentTime={currentTime}
-              onSelectTime={handleSelectTime}
-              onUpdateSubtitleText={handleUpdateSubtitleText}
-              onResetSubtitles={handleResetSubtitles}
-            />
-            
-          </div>
-
-          {/* RIGHT AREA: Fact Check companion & AI Analyzer (size 5/12) */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            <FactCheckPanel currentSubtitle={currentSubtitle} />
-            
-          </div>
-
+          <TimelineTracks
+            subtitles={subtitles}
+            currentTime={currentTime}
+            onSelectTime={handleSelectTime}
+            onUpdateSubtitleText={handleUpdateSubtitleText}
+            onResetSubtitles={handleResetSubtitles}
+          />
         </div>
 
         {/* Dynamic educational glossary explaining the core principles */}

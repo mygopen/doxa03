@@ -12,11 +12,9 @@ import {
 } from "lucide-react";
 import { SubtitleItem } from "../types";
 import {
-  HAS_PUBLIC_VIDEO_URL,
   R2_DASHBOARD_OBJECT_URL,
   R2_OBJECT_PATH,
   VIDEO_SOURCE_URL,
-  VIDEO_SOURCE_KIND,
 } from "../videoConfig";
 
 const TIMELINE_MARKERS = [0, 16, 24, 31, 42, 52, 65, 79, 89];
@@ -129,10 +127,6 @@ export default function StoryboardView({
     ? `${currentSubtitle.sceneTitle} · ${currentSubtitle.speaker}`
     : "等待播放";
 
-  const publicUrlHint = HAS_PUBLIC_VIDEO_URL
-    ? VIDEO_SOURCE_KIND
-    : "R2 PUBLIC URL NEEDED";
-
   return (
     <div className="space-y-4">
       {/* 1. Main player panel screen area */}
@@ -161,28 +155,20 @@ export default function StoryboardView({
           <source src={VIDEO_SOURCE_URL} type="video/mp4" />
         </video>
 
-        <div className="pointer-events-none absolute left-3 right-3 top-3 flex items-start justify-between gap-3">
-          <span className="rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white/90 backdrop-blur">
-            {publicUrlHint}
-          </span>
-          <div className="flex min-w-0 items-center gap-2">
-            <span className="hidden max-w-[42vw] truncate rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-mono text-white/80 backdrop-blur sm:block">
-              {R2_OBJECT_PATH}
-            </span>
-            <button
-              type="button"
-              onClick={handleToggleFullscreen}
-              className="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-md bg-black/70 text-white/90 backdrop-blur transition hover:bg-white hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-white/70"
-              title={isFullscreen ? "離開全螢幕" : "全螢幕播放"}
-              aria-label={isFullscreen ? "離開全螢幕" : "全螢幕播放"}
-            >
-              {isFullscreen ? (
-                <Minimize2 className="h-4 w-4" />
-              ) : (
-                <Maximize2 className="h-4 w-4" />
-              )}
-            </button>
-          </div>
+        <div className="pointer-events-none absolute right-3 top-3 flex justify-end">
+          <button
+            type="button"
+            onClick={handleToggleFullscreen}
+            className="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-md bg-black/70 text-white/90 backdrop-blur transition hover:bg-white hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-white/70"
+            title={isFullscreen ? "離開全螢幕" : "全螢幕播放"}
+            aria-label={isFullscreen ? "離開全螢幕" : "全螢幕播放"}
+          >
+            {isFullscreen ? (
+              <Minimize2 className="h-4 w-4" />
+            ) : (
+              <Maximize2 className="h-4 w-4" />
+            )}
+          </button>
         </div>
 
         {videoError && (
