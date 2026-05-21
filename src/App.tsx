@@ -125,8 +125,8 @@ export default function App() {
                   確認是否有其他權威媒體或事實查核機構對同一事件進行報導。
                 </div>
                 <div>
-                  <span className="font-sketch-heading text-[var(--ballpoint)]">4. Trace claims, quotes, and media to their original context：</span>
-                  透過回溯原始發布環境，確認內容是否被斷章取義或誤導使用。
+                  <span className="font-sketch-heading text-[var(--ballpoint)]">4. Trace claims, quotes, and media to their original context（追溯原始脈絡）：</span>
+                  透過回溯發布環境，確認內容是否遭斷章取義或誤導。
                 </div>
               </div>
             </div>
