@@ -199,6 +199,27 @@ input {
   box-shadow: var(--hard-shadow-lg);
 }
 
+.sketch-video-play-button {
+  border: 4px solid var(--pencil);
+  border-radius: 38% 62% 43% 57% / 52% 41% 59% 48%;
+  box-shadow: 8px 8px 0 0 var(--pencil);
+  height: clamp(5rem, 13vw, 8rem);
+  transform: translate(-50%, -50%) rotate(-2deg);
+  transition: transform 100ms ease, box-shadow 100ms ease, background-color 100ms ease;
+  width: clamp(5rem, 13vw, 8rem);
+}
+
+.sketch-video-play-button:hover {
+  background: var(--post-it);
+  box-shadow: 4px 4px 0 0 var(--pencil);
+  transform: translate(calc(-50% + 4px), calc(-50% + 4px)) rotate(1deg);
+}
+
+.sketch-video-play-button:active {
+  box-shadow: 0 0 0 0 var(--pencil);
+  transform: translate(calc(-50% + 8px), calc(-50% + 8px)) rotate(0deg);
+}
+
 .sketch-subtitle {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.62), transparent);
   font-family: "Kalam", "Patrick Hand", cursive;

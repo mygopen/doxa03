@@ -123,6 +123,8 @@ export default function StoryboardView({
     await playerRef.current?.requestFullscreen();
   };
 
+  const showInitialPlayButton = !videoError && !isPlaying && currentTime <= 0.1;
+
   const subtitleTextSize = currentSubtitle && currentSubtitle.text.length > 90
     ? "text-base md:text-xl"
     : currentSubtitle && currentSubtitle.text.length > 58
@@ -156,6 +158,18 @@ export default function StoryboardView({
         >
           <source src={VIDEO_SOURCE_URL} type="video/mp4" />
         </video>
+
+        {showInitialPlayButton && (
+          <button
+            type="button"
+            onClick={handleTogglePlayback}
+            className="sketch-video-play-button absolute left-1/2 top-1/2 z-20 inline-flex items-center justify-center bg-white/95 text-[var(--marker-red)] focus:outline-none focus:ring-4 focus:ring-[var(--ballpoint)]/30"
+            title="播放影片"
+            aria-label="播放影片"
+          >
+            <Play className="ml-1 h-12 w-12 fill-[var(--marker-red)] md:h-16 md:w-16" strokeWidth={3} />
+          </button>
+        )}
 
         <div className="pointer-events-none absolute right-3 top-3 flex justify-end">
           <button
